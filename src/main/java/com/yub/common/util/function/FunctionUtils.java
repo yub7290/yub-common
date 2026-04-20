@@ -1,5 +1,8 @@
 package com.yub.common.util.function;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.function.*;
 
 /**
@@ -9,6 +12,8 @@ import java.util.function.*;
  * @Version: 1.0.0
  */
 public final class FunctionUtils {
+
+    private static final Logger log = LoggerFactory.getLogger(FunctionUtils.class);
 
     /** 私有构造器，禁止实例化 */
     private FunctionUtils() {
@@ -47,7 +52,7 @@ public final class FunctionUtils {
     }
 
     /**
-     * 安全的消费者
+     * 安全的消费者（异常记录日志）
      *
      * @param consumer 消费者
      * @param <T> 输入类型
@@ -58,7 +63,25 @@ public final class FunctionUtils {
             try {
                 consumer.accept(t);
             } catch (Exception e) {
-                // 吞掉异常，不影响主流程
+                log.error("Safe consumer execution failed", e);
+            }
+        };
+    }
+
+    /**
+     * 安全的消费者（异常自定义处理）
+     *
+     * @param consumer 消费者
+     * @param errorHandler 异常处理器
+     * @param <T> 输入类型
+     * @return 安全包装后的消费者
+     */
+    public static <T> Consumer<T> safeConsumer(Consumer<T> consumer, Consumer<Exception> errorHandler) {
+        return t -> {
+            try {
+                consumer.accept(t);
+            } catch (Exception e) {
+                errorHandler.accept(e);
             }
         };
     }

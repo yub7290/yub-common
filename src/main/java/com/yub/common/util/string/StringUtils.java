@@ -125,7 +125,8 @@ public final class StringUtils {
         if (isEmpty(camelCase)) {
             return "";
         }
-        return camelCase.replaceAll("([A-Z])", "_$1").toLowerCase().substring(1);
+        String result = camelCase.replaceAll("([A-Z])", "_$1").toLowerCase();
+        return result.startsWith("_") ? result.substring(1) : result;
     }
 
     /**

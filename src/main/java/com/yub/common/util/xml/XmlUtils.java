@@ -26,7 +26,12 @@ public final class XmlUtils {
         throw new UnsupportedOperationException("This class cannot be instantiated");
     }
 
-    private static final ThreadLocal<DocumentBuilder> BUILDER_HOLDER = ThreadLocal.withInitial(() -> {
+    /**
+     * 创建 DocumentBuilder（每次调用创建新实例保证线程安全）
+     *
+     * @return DocumentBuilder
+     */
+    private static DocumentBuilder createDocumentBuilder() {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
@@ -36,7 +41,7 @@ public final class XmlUtils {
         } catch (Exception e) {
             throw new RuntimeException("Failed to create DocumentBuilder", e);
         }
-    });
+    }
 
     /**
      * 解析 XML 字符串为 Document
@@ -49,8 +54,9 @@ public final class XmlUtils {
             return null;
         }
         try {
+            DocumentBuilder builder = createDocumentBuilder();
             InputSource inputSource = new InputSource(new StringReader(xml));
-            return BUILDER_HOLDER.get().parse(inputSource);
+            return builder.parse(inputSource);
         } catch (Exception e) {
             throw new RuntimeException("Failed to parse XML", e);
         }

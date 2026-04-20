@@ -24,5 +24,8 @@ hs_err_pid*
 replay_pid*
 
 # Claude Code
-CLAUDE.md
+.claude/
 docs/
+
+# Maven
+target/

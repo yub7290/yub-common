@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -20,19 +21,34 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Response<T> implements Serializable {
 
-    /** 序列化版本号 */
+    /**
+     * 序列化版本号
+     */
+    @Serial
     private static final long serialVersionUID = 1L;
 
-    /** 状态码 */
+    private static final int SUCCESS_CODE = 200;
+
+    private static final String SUCCESS_MESSAGE = "操作成功";
+
+    /**
+     * 状态码
+     */
     private int code;
 
-    /** 状态信息 */
+    /**
+     * 状态信息
+     */
     private String message;
 
-    /** 响应数据 */
+    /**
+     * 响应数据
+     */
     private T data;
 
-    /** 时间戳 */
+    /**
+     * 时间戳
+     */
     private long timestamp;
 
     /**
@@ -49,13 +65,13 @@ public class Response<T> implements Serializable {
      * 创建成功响应
      *
      * @param data 响应数据
-     * @param <T> 数据类型
+     * @param <T>  数据类型
      * @return 成功响应
      */
     public static <T> Response<T> success(T data) {
         return Response.<T>builder()
-                .code(ResponseCode.SUCCESS.getCode())
-                .message(ResponseCode.SUCCESS.getMessage())
+                .code(SUCCESS_CODE)
+                .message(SUCCESS_MESSAGE)
                 .data(data)
                 .timestamp(System.currentTimeMillis())
                 .build();
@@ -64,8 +80,8 @@ public class Response<T> implements Serializable {
     /**
      * 创建失败响应
      *
-     * @param responseCode 响应码
-     * @param <T> 数据类型
+     * @param responseCode 错误码
+     * @param <T>          数据类型
      * @return 失败响应
      */
     public static <T> Response<T> error(ResponseCode responseCode) {
@@ -76,33 +92,18 @@ public class Response<T> implements Serializable {
                 .build();
     }
 
+
     /**
      * 创建失败响应
      *
-     * @param code 错误码
+     * @param code    错误码
      * @param message 错误信息
-     * @param <T> 数据类型
+     * @param <T>     数据类型
      * @return 失败响应
      */
     public static <T> Response<T> error(int code, String message) {
         return Response.<T>builder()
                 .code(code)
-                .message(message)
-                .timestamp(System.currentTimeMillis())
-                .build();
-    }
-
-    /**
-     * 创建业务异常响应
-     *
-     * @param responseCode 响应码
-     * @param message 自定义消息
-     * @param <T> 数据类型
-     * @return 业务异常响应
-     */
-    public static <T> Response<T> error(ResponseCode responseCode, String message) {
-        return Response.<T>builder()
-                .code(responseCode.getCode())
                 .message(message)
                 .timestamp(System.currentTimeMillis())
                 .build();

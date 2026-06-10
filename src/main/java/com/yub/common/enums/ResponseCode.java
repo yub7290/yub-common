@@ -1,11 +1,16 @@
 package com.yub.common.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * @Author: bing.yu
  * @CreateTime: 2026-04-20
  * @Description: 统一响应状态码枚举
  * @Version: 1.0.0
  */
+@Getter
+@AllArgsConstructor
 public enum ResponseCode {
 
     // ========== 成功 ==========
@@ -59,27 +64,4 @@ public enum ResponseCode {
 
     /** 状态信息 */
     private final String message;
-
-    ResponseCode(int code, String message) {
-        this.code = code;
-        this.message = message;
-    }
-
-    /**
-     * 获取状态码
-     *
-     * @return 状态码
-     */
-    public int getCode() {
-        return code;
-    }
-
-    /**
-     * 获取状态信息
-     *
-     * @return 状态信息
-     */
-    public String getMessage() {
-        return message;
-    }
 }

@@ -21,8 +21,16 @@ public class PageParam implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 当前页码
+     */
+    @Builder.Default
     private int pageNum = 1;
 
+    /**
+     * 每页记录数
+     */
+    @Builder.Default
     private int pageSize = 10;
 
     /**

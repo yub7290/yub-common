@@ -1,6 +1,9 @@
 package com.yub.common.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -12,6 +15,9 @@ import java.io.Serializable;
  * @Version: 1.0
  */
 @Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class PageQuery<T> implements Serializable {
 
     @Serial

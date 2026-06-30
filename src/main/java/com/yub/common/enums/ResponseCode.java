@@ -1,5 +1,6 @@
 package com.yub.common.enums;
 
+import com.yub.common.exception.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,7 +12,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum ResponseCode {
+public enum ResponseCode implements ErrorCode {
 
     // ========== 成功 ==========
     /** 操作成功 */
@@ -50,6 +51,10 @@ public enum ResponseCode {
     RATE_LIMIT_EXCEEDED(1003, "操作频率限制"),
     /** 防重复提交 */
     DUPLICATE_REQUEST(1004, "请勿重复提交"),
+    /** 文件大小超过限制 */
+    FILE_SIZE_EXCEEDED(1005, "文件大小超过限制"),
+    /** 文件类型不允许 */
+    FILE_TYPE_NOT_ALLOWED(1006, "文件类型不允许"),
 
     // ========== 系统错误 5xxx ==========
     /** 系统繁忙 */
